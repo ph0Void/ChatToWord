@@ -3,6 +3,10 @@
 Conversor que transforma respuestas (de chatbots como ChatGPT, Claude, Gemini, etc.) en contenido editable dentro de Microsoft Word mediante un Office Add-in (Task Pane).
 Tiene soporte para tablas, bloques de código y fórmulas matemáticas.
 
+<img width="1918" height="900" alt="image" src="https://github.com/user-attachments/assets/70cd09f1-6c6d-4c89-ae81-3500d86f7b81" />
+
+<img width="1919" height="900" alt="image" src="https://github.com/user-attachments/assets/70a53edf-d790-4893-8680-3afa0f231ed7" />
+
 ## **Qué hace**
 
 Pegar la respuesta de un chatbot en el panel y convertir tablas, código y fórmulas en contenido de Word.
