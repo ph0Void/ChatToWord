@@ -57,7 +57,7 @@ Si solo quieres probar el complemento rápidamente en Word:
 
 4. Abre el panel de tareas del complemento y pega el contenido de tu chatbot.
 
-> 💡 Si el manifest apunta a `https://localhost:3000`, asegúrate de tener el servidor en ejecución (ver sección de instalación local).
+ 
 
 ---
 
@@ -68,8 +68,7 @@ Si solo quieres probar el complemento rápidamente en Word:
 - [Node.js](https://nodejs.org/) (recomendado v20+)
 - npm (incluido con Node.js)
 - Microsoft Word (Web o Escritorio)
-- Opcional: Docker y Docker Compose (para entorno en contenedor)
-
+ 
 ### Pasos
 
 1. Clona este repositorio:
@@ -97,7 +96,7 @@ Si solo quieres probar el complemento rápidamente en Word:
    npm run start
    ```
 
-5. Carga el complemento en Word con el `manifest.xml` (ver sección anterior), si no se ha hecho ya.
+5.  Automaticamente se abrira word para poder probar el complemento
 
 ---
 
@@ -134,7 +133,7 @@ El proyecto está configurado para ejecutar el servidor de desarrollo en un cont
    docker-compose up --build
    ```
 
-4. Abre Word en tu equipo y carga/ejecuta el complemento (usando el `manifest.xml` que apunta a `https://localhost:3000`).
+4. Abre Word en tu equipo y carga/ejecuta el complemento (usando el `manifest.xml`).
 
 ---
 
