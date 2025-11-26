@@ -1,0 +1,14 @@
+services:
+  chat-to-word:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - WEBPACK_DEV_SERVER_HOST=0.0.0.0
+      - WEBPACK_DEV_SERVER_HTTPS_KEY=/root/.office-addin-dev-certs/localhost.key
+      - WEBPACK_DEV_SERVER_HTTPS_CERT=/root/.office-addin-dev-certs/localhost.crt
+      - WEBPACK_DEV_SERVER_HTTPS_CA=/root/.office-addin-dev-certs/ca.crt
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ${USERPROFILE}/.office-addin-dev-certs:/root/.office-addin-dev-certs

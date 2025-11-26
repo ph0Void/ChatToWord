@@ -1,0 +1,4 @@
+.vscode
+download/
+node_modules/
+.env

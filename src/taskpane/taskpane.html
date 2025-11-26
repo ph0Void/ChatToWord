@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chat to Word - Conversor</title>
+
+    <!-- Office JavaScript API -->
+    <script
+      type="text/javascript"
+      src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+      textarea {
+        min-height: 300px;
+        max-height: 60vh;
+      }
+
+      @media (max-width: 400px) {
+        textarea {
+          min-height: 300px;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 min-h-screen flex flex-col">
+    <header class="bg-white border-b border-slate-200 px-4 py-4">
+      <div class="max-w-2xl mx-auto flex items-center gap-3">
+        <img
+          src="https://res.cloudinary.com/dkd37ttep/image/upload/v1757258364/kft4hp7sxtym0s7voynl.png"
+          class="w-12 h-12 rounded-xl"
+          alt="Ph0 Logo"
+        />
+
+        <div class="flex-1 min-w-0">
+          <h1 class="text-lg font-bold text-slate-800 truncate">Chat to Word</h1>
+          <p class="text-xs text-slate-500 truncate">
+            Convierte respuestas de IA a documentos editables
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section id="sideload-msg" class="flex-1 px-4 py-6">
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <div class="flex gap-3">
+            <div class="flex-shrink-0">
+              <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div class="text-sm">
+              <p class="font-medium text-amber-800">Complemento no cargado</p>
+              <p class="text-amber-700 mt-1">
+                <a
+                  href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing"
+                  target="_blank"
+                  class="underline hover:text-amber-900"
+                >
+                  Carga lateralmente
+                </a>
+                tu complemento para comenzar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main id="app-body" class="flex-1 px-4 py-4 hidden flex-col">
+      <div class="max-w-2xl mx-auto w-full flex-1 flex flex-col">
+        <div
+          class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 flex-1 flex flex-col"
+        >
+          <div class="mb-4">
+            <h2 class="text-base font-semibold text-slate-800">Pega tu contenido</h2>
+            <p class="text-xs text-slate-500 mt-1">
+              Soporta Tablas y fórmulas matemáticas de ChatGPT, Claude, Gemini, etc.
+            </p>
+          </div>
+
+          <div class="flex-1 mb-4">
+            <textarea
+              id="markdown-input"
+              class="w-full h-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm text-slate-700 placeholder-slate-400 resize-y transition-shadow"
+              placeholder="Pega aquí la respuesta de tu chatbot..."
+            >
+            </textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <button
+              id="run"
+              class="flex-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-150 flex items-center justify-center gap-2 shadow-sm hover:shadow cursor-pointer"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                />
+              </svg>
+              <span>Insertar en Word</span>
+            </button>
+
+            <button
+              id="clear"
+              type="button"
+              class="sm:w-28 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 font-medium py-3 px-4 rounded-lg transition-all duration-150 cursor-pointer"
+            >
+              Limpiar
+            </button>
+          </div>
+
+          <div id="status-container" class="mt-4 hidden">
+            <div
+              id="item-subject"
+              class="text-sm flex items-center gap-2 p-3 rounded-lg"
+              aria-live="polite"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="px-4 py-3 text-center">
+      <p class="text-xs text-slate-400">Chat to Word v1.0</p>
+      <a class="cursor-pointer" href="https://github.com/ph0Void/ChatToWord.git">
+        <p class="text-xs text-slate-400 underline hover:text-slate-600">Ver en GitHub</p>
+      </a>
+    </footer>
+  </body>
+</html>

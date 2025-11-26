@@ -1,0 +1,6 @@
+.vscode
+/root/.office-addin-dev-certs
+
+node_modules/
+dist
+.env
