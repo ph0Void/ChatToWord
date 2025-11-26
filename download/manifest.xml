@@ -60,26 +60,26 @@
         </DesktopFormFactor>
       </Host>
     </Hosts>
+
     <Resources>
-      <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
-      </bt:Images>
-      <bt:Urls>
-        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
-      </bt:Urls>
-      <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
-      </bt:ShortStrings>
-      <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Show Task Pane' button to get started."/>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
-      </bt:LongStrings>
-    </Resources>
+    <bt:Images>
+      <bt:Image id="icon-16" DefaultValue="https://chattoword-p.netlify.app/assets/icon-16.png"/>
+      <bt:Image id="icon-32" DefaultValue="https://chattoword-p.netlify.app/assets/icon-32.png"/>
+      <bt:Image id="icon-80" DefaultValue="https://chattoword-p.netlify.app/assets/icon-80.png"/>
+    </bt:Images>
+    <bt:Urls>
+      <!-- CAMBIO 3: Las URLs de los recursos -->
+      <bt:Url id="Taskpane.Url" DefaultValue="https://chattoword-p.netlify.app/taskpane.html"/>
+      <bt:Url id="commands.Url" DefaultValue="https://chattoword-p.netlify.app/commands.html"/>
+    </bt:Urls>
+    <bt:ShortStrings>
+      <bt:String id="CommandsGroup.Label" DefaultValue="Herramientas IA"/>
+      <bt:String id="TaskpaneButton.Label" DefaultValue="Abrir Chat to Word"/>
+    </bt:ShortStrings>
+    <bt:LongStrings>
+      <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Abre el panel para convertir Markdown a Word"/>
+    </bt:LongStrings>
+  </Resources>
+  
   </VersionOverrides>
 </OfficeApp>
