@@ -161,22 +161,10 @@ El proyecto está configurado para ejecutar el servidor de desarrollo en un cont
   - Cambia `dev_server_port` en `package.json` **o**
   - Ajusta el mapeo de puertos en `docker-compose.yml`.
 
+ 
 ---
 
-## 🤝 Contribuir
-
-Las contribuciones son bienvenidas:
-
-1. Haz un **fork** del repositorio.
-2. Crea una rama con tu feature/fix:  
-   `git checkout -b feature/mi-mejora`
-3. Haz commit de tus cambios:  
-   `git commit -m "Añade soporte para X"`
-4. Envía un **Pull Request**.
-
----
-
-## 📣 Importante / Soporte
+## 📣 Soporte
 
 Si encuentras algún error, tienes dudas o sugerencias:
 
