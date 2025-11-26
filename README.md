@@ -9,7 +9,7 @@ Pegar la respuesta de un chatbot en el panel y convertir tablas, código y fórm
 
 ## **Cómo usarlo**
 
-### **Carga del complemento con Manifest**
+### **1. Carga del complemento con Manifest**
 
 1. Descargar el manifesto `manifest.xml` desde la carpeta `download/`.
 2. Abre Microsoft Word.
@@ -17,7 +17,7 @@ Pegar la respuesta de un chatbot en el panel y convertir tablas, código y fórm
    - Abre Word y ve a "Insertar" > "Mis complementos" > "Administrar mis complementos" > "Cargar complemento sin empaquetar".
    - Selecciona el archivo `manifest.xml` en la carpeta del proyecto.
 
-### **Instalación y ejecución local**
+### **2. Instalación y ejecución local**
 
 **Requisitos**:
 
@@ -51,7 +51,7 @@ npx office-addin-dev-certs install
 npm run start
 ```
 
-### **Ejecutar con Docker**
+### **3. Ejecutar con Docker**
 
 **Requisitos**
 
