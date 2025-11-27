@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+
   <Id>0ed0eef1-b3f2-4ec3-b7a1-beaf231d5572</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Ph0Void</ProviderName>
   <DefaultLocale>es-ES</DefaultLocale>
+
   <DisplayName DefaultValue="Chat To Word"/>
   <Description DefaultValue="Convierte Markdown de IA a Word."/>
+
   <IconUrl DefaultValue="https://res.cloudinary.com/dkd37ttep/image/upload/v1757258364/kft4hp7sxtym0s7voynl.png"/>
   <HighResolutionIconUrl DefaultValue="https://res.cloudinary.com/dkd37ttep/image/upload/v1757258364/kft4hp7sxtym0s7voynl.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+
+  <SupportUrl DefaultValue="https://github.com/ph0Void/ChatToWord"/>
+
   <AppDomains>
     <AppDomain>https://chattoword-p.netlify.app</AppDomain>
   </AppDomains>
+
   <Hosts>
     <Host Name="Document"/>
   </Hosts>
+
   <DefaultSettings>
     <SourceLocation DefaultValue="https://chattoword-p.netlify.app/taskpane.html"/>
   </DefaultSettings>
+
   <Permissions>ReadWriteDocument</Permissions>
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+
+  <VersionOverrides
+    xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+    xsi:type="VersionOverridesV1_0">
+
     <Hosts>
       <Host xsi:type="Document">
         <DesktopFormFactor>
@@ -28,7 +45,9 @@
             <Description resid="GetStarted.Description"/>
             <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
           </GetStarted>
+
           <FunctionFile resid="Commands.Url"/>
+
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <OfficeTab id="TabHome">
               <Group id="CommandsGroup">
@@ -60,24 +79,30 @@
         </DesktopFormFactor>
       </Host>
     </Hosts>
+
     <Resources>
       <bt:Images>
         <bt:Image id="Icon.16x16" DefaultValue="https://chattoword-p.netlify.app/assets/icon-16.png"/>
         <bt:Image id="Icon.32x32" DefaultValue="https://chattoword-p.netlify.app/assets/icon-32.png"/>
         <bt:Image id="Icon.80x80" DefaultValue="https://chattoword-p.netlify.app/assets/icon-80.png"/>
       </bt:Images>
+
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
         <bt:Url id="Commands.Url" DefaultValue="https://chattoword-p.netlify.app/commands.html"/>
         <bt:Url id="Taskpane.Url" DefaultValue="https://chattoword-p.netlify.app/taskpane.html"/>
       </bt:Urls>
-       <bt:ShortStrings>
-      <bt:String id="CommandsGroup.Label" DefaultValue="Herramientas IA"/>
-      <bt:String id="TaskpaneButton.Label" DefaultValue="Abrir Chat to Word"/>
-    </bt:ShortStrings>
-    <bt:LongStrings>
-      <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Abre el panel para convertir Markdown a Word"/>
-    </bt:LongStrings>
+
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="Chat to Word"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="Herramientas IA"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Abrir Chat to Word"/>
+      </bt:ShortStrings>
+
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Convierte respuestas de IA (Markdown) en contenido editable de Word."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Abre el panel para convertir Markdown a Word"/>
+      </bt:LongStrings>
     </Resources>
   </VersionOverrides>
 </OfficeApp>
