@@ -85,7 +85,7 @@
 
       <bt:ShortStrings>
         <bt:String id="CommandsGroup.Label" DefaultValue="Herramientas IA"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Abrir Chat to Word"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Chat to Word"/>
       </bt:ShortStrings>
 
       <bt:LongStrings>
