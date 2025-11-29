@@ -1,0 +1,1036 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat to Word</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style type="text/tailwindcss">
+      @theme {
+        --color-gray-50: #f9fafb;
+        --color-gray-100: #f3f4f6;
+        --color-gray-200: #e5e7eb;
+        --color-gray-300: #d1d5db;
+        --color-gray-400: #9ca3af;
+        --color-gray-500: #6b7280;
+        --color-gray-600: #4b5563;
+        --color-gray-700: #374151;
+        --color-gray-800: #1f2937;
+        --color-gray-900: #111827;
+      }
+
+      @custom-variant dark (&:where(.dark, .dark *));
+    </style>
+    <style>
+      * {
+        font-family: "Inter", sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #4f46e5 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .code-block {
+        background: #1e293b;
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+      }
+      .code-block code {
+        color: #e2e8f0;
+        font-family: "Courier New", monospace;
+        font-size: 0.875rem;
+      }
+    </style>
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        if (
+          savedTheme === "dark" ||
+          (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300"
+  >
+    <header
+      class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700"
+    >
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="#" class="text-xl font-bold gradient-text">
+            <img
+              class="inline-block w-8 h-8 mr-2 align-middle"
+              src="https://res.cloudinary.com/dkd37ttep/image/upload/v1764439666/qcxajoqwk3qc68hnhnde.png"
+              alt="logo"
+            />
+            Chat to Word
+          </a>
+
+          <button
+            id="mobile-menu-btn"
+            class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+
+          <div class="hidden md:flex items-center space-x-6">
+            <a
+              href="#caracteristicas"
+              class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >Características</a
+            >
+            <a
+              href="#instalacion"
+              class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >Instalación</a
+            >
+
+            <a
+              href="#soporte"
+              class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >Soporte</a
+            >
+            <a
+              href="https://github.com/ph0Void/ChatToWord"
+              target="_blank"
+              class="px-4 py-2 items-center gap-2 cursor-pointer flex bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition"
+            >
+              <svg
+                fill="#ffffff"
+                width="20px"
+                height="20px"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                data-name="Layer 1"
+              >
+                <path
+                  d="M12,2.2467A10.00042,10.00042,0,0,0,8.83752,21.73419c.5.08752.6875-.21247.6875-.475,0-.23749-.01251-1.025-.01251-1.86249C7,19.85919,6.35,18.78423,6.15,18.22173A3.636,3.636,0,0,0,5.125,16.8092c-.35-.1875-.85-.65-.01251-.66248A2.00117,2.00117,0,0,1,6.65,17.17169a2.13742,2.13742,0,0,0,2.91248.825A2.10376,2.10376,0,0,1,10.2,16.65923c-2.225-.25-4.55-1.11254-4.55-4.9375a3.89187,3.89187,0,0,1,1.025-2.6875,3.59373,3.59373,0,0,1,.1-2.65s.83747-.26251,2.75,1.025a9.42747,9.42747,0,0,1,5,0c1.91248-1.3,2.75-1.025,2.75-1.025a3.59323,3.59323,0,0,1,.1,2.65,3.869,3.869,0,0,1,1.025,2.6875c0,3.83747-2.33752,4.6875-4.5625,4.9375a2.36814,2.36814,0,0,1,.675,1.85c0,1.33752-.01251,2.41248-.01251,2.75,0,.26251.1875.575.6875.475A10.0053,10.0053,0,0,0,12,2.2467Z"
+                />
+              </svg>
+              Ver en GitHub
+            </a>
+            <button
+              id="theme-toggle"
+              class="p-2 cursor-pointer rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <svg
+                id="sun-icon"
+                class="w-5 h-5 hidden dark:block"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                id="moon-icon"
+                class="w-5 h-5 block dark:hidden"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+          <div class="flex flex-col space-y-3">
+            <a
+              href="#caracteristicas"
+              class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >Características</a
+            >
+            <a
+              href="#instalacion"
+              class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >Instalación</a
+            >
+
+            <a
+              href="#soporte"
+              class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+              >Soporte</a
+            >
+            <a
+              href="https://github.com/ph0Void/ChatToWord"
+              target="_blank"
+              class="px-4 py-2 items-center gap-2 cursor-pointer flex bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition text-center"
+              ><svg
+                fill="#ffffff"
+                width="20px"
+                height="20px"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                data-name="Layer 1"
+              >
+                <path
+                  d="M12,2.2467A10.00042,10.00042,0,0,0,8.83752,21.73419c.5.08752.6875-.21247.6875-.475,0-.23749-.01251-1.025-.01251-1.86249C7,19.85919,6.35,18.78423,6.15,18.22173A3.636,3.636,0,0,0,5.125,16.8092c-.35-.1875-.85-.65-.01251-.66248A2.00117,2.00117,0,0,1,6.65,17.17169a2.13742,2.13742,0,0,0,2.91248.825A2.10376,2.10376,0,0,1,10.2,16.65923c-2.225-.25-4.55-1.11254-4.55-4.9375a3.89187,3.89187,0,0,1,1.025-2.6875,3.59373,3.59373,0,0,1,.1-2.65s.83747-.26251,2.75,1.025a9.42747,9.42747,0,0,1,5,0c1.91248-1.3,2.75-1.025,2.75-1.025a3.59323,3.59323,0,0,1,.1,2.65,3.869,3.869,0,0,1,1.025,2.6875c0,3.83747-2.33752,4.6875-4.5625,4.9375a2.36814,2.36814,0,0,1,.675,1.85c0,1.33752-.01251,2.41248-.01251,2.75,0,.26251.1875.575.6875.475A10.0053,10.0053,0,0,0,12,2.2467Z"
+                />
+              </svg>
+              Ver en GitHub
+            </a>
+            <button
+              id="theme-toggle-mobile"
+              class="flex cursor-pointer items-center justify-center gap-2 p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <span class="dark:hidden">🌙 Modo oscuro</span>
+              <span class="hidden dark:inline">☀️ Modo claro</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="pt-24 pb-16 md:pt-32 md:pb-24 gradient-bg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="text-white">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+              Chat to Word
+              <span class="block text-indigo-200">De chatbots a Word en un clic</span>
+            </h1>
+            <p class="text-lg md:text-xl text-indigo-100 mb-8 leading-relaxed">
+              Complemento de Microsoft Word que convierte respuestas de chatbots (ChatGPT, Claude,
+              Gemini, etc.) en contenido <strong>totalmente editable</strong>. Soporta tablas,
+              bloques de código y fórmulas matemáticas.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a
+                href="https://github.com/ph0Void/ChatToWord"
+                target="_blank"
+                class="px-6 items-center gap-2 cursor-pointer flex py-3 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-gray-100 transition text-center shadow-lg"
+              >
+                <svg
+                  fill="#000000"
+                  width="30px"
+                  height="30px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  data-name="Layer 1"
+                >
+                  <path
+                    d="M12,2.2467A10.00042,10.00042,0,0,0,8.83752,21.73419c.5.08752.6875-.21247.6875-.475,0-.23749-.01251-1.025-.01251-1.86249C7,19.85919,6.35,18.78423,6.15,18.22173A3.636,3.636,0,0,0,5.125,16.8092c-.35-.1875-.85-.65-.01251-.66248A2.00117,2.00117,0,0,1,6.65,17.17169a2.13742,2.13742,0,0,0,2.91248.825A2.10376,2.10376,0,0,1,10.2,16.65923c-2.225-.25-4.55-1.11254-4.55-4.9375a3.89187,3.89187,0,0,1,1.025-2.6875,3.59373,3.59373,0,0,1,.1-2.65s.83747-.26251,2.75,1.025a9.42747,9.42747,0,0,1,5,0c1.91248-1.3,2.75-1.025,2.75-1.025a3.59323,3.59323,0,0,1,.1,2.65,3.869,3.869,0,0,1,1.025,2.6875c0,3.83747-2.33752,4.6875-4.5625,4.9375a2.36814,2.36814,0,0,1,.675,1.85c0,1.33752-.01251,2.41248-.01251,2.75,0,.26251.1875.575.6875.475A10.0053,10.0053,0,0,0,12,2.2467Z"
+                  />
+                </svg>
+                Ver en GitHub
+              </a>
+              <a
+                href="https://github.com/ph0Void/ChatToWord/blob/ffe9aee6117b7f3b978f58d92c10cc0a6112c08f/download/manifest.xml"
+                target="_blank"
+                class="px-6 py-3 items-center gap-2 cursor-pointer flex bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-400 transition text-center border-2 border-indigo-300"
+              >
+                <svg
+                  fill="#000000"
+                  width="30px"
+                  height="30px"
+                  viewBox="0 0 24 24"
+                  id="download-alt"
+                  data-name="Flat Line"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon flat-line"
+                >
+                  <polyline
+                    id="primary"
+                    points="8 12 12 16 16 12"
+                    style="
+                      fill: none;
+                      stroke: rgb(255, 255, 255);
+                      stroke-linecap: round;
+                      stroke-linejoin: round;
+                      stroke-width: 2;
+                    "
+                  ></polyline>
+                  <path
+                    id="primary-2"
+                    data-name="primary"
+                    d="M5,21H19M12,3V16"
+                    style="
+                      fill: none;
+                      stroke: rgb(255, 251, 251);
+                      stroke-linecap: round;
+                      stroke-linejoin: round;
+                      stroke-width: 2;
+                    "
+                  ></path>
+                </svg>
+                Descargar
+              </a>
+            </div>
+          </div>
+          <div class="relative">
+            <div
+              class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-2xl"
+            >
+              <div class="bg-gray-900 rounded-lg overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-3 bg-gray-800">
+                  <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span class="ml-2 text-gray-400 text-sm">Microsoft Word</span>
+                </div>
+                <img
+                  src="https://github.com/user-attachments/assets/70cd09f1-6c6d-4c89-ae81-3500d86f7b81"
+                  alt="Chat to Word Preview"
+                  class="w-full h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Características -->
+    <section id="caracteristicas" class="py-16 md:py-24 bg-white dark:bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Características</h2>
+          <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Todo lo que necesitas para convertir respuestas de chatbots en documentos profesionales
+            de Word.
+          </p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl hover:shadow-lg transition group">
+            <div class="text-4xl mb-4">📋</div>
+            <h3 class="font-semibold text-lg mb-2">Tablas Nativas</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">
+              Convierte tablas de chatbots en tablas nativas de Word totalmente editables.
+            </p>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl hover:shadow-lg transition group">
+            <div class="text-4xl mb-4">💻</div>
+            <h3 class="font-semibold text-lg mb-2">Bloques de Código</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">
+              Transforma bloques de código en texto monoespaciado con formato profesional.
+            </p>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl hover:shadow-lg transition group">
+            <div class="text-4xl mb-4">🧮</div>
+            <h3 class="font-semibold text-lg mb-2">Fórmulas Matemáticas</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">
+              Convierte fórmulas en ecuaciones editables dentro de Word.
+            </p>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl hover:shadow-lg transition group">
+            <div class="text-4xl mb-4">🌐</div>
+            <h3 class="font-semibold text-lg mb-2">Web y Escritorio</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">
+              Funciona tanto en Word en la Web como en Word de Escritorio (Windows).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video   -->
+    <section class="py-16 md:py-24 bg-gray-100 dark:bg-gray-900">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Tutorial</h2>
+          <!-- <p class="text-gray-600 dark:text-gray-300">
+            Mira este breve video para ver cómo funciona Chat to Word en acción.
+          </p> -->
+        </div>
+        <div class="relative w-full" style="padding-bottom: 56.25%">
+          <iframe
+            class="absolute top-0 left-0 w-full h-full rounded-xl shadow-2xl"
+            src="https://www.youtube.com/embed/D5TxJmWushk"
+            title="Chat to Word  - Tutorial de uso"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-white dark:bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Captura de Pantalla</h2>
+          <!-- <p class="text-gray-600 dark:text-gray-300">
+            Haz clic en cualquier imagen para verla en pantalla completa.
+          </p> -->
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item cursor-pointer group">
+            <div class="overflow-hidden rounded-xl shadow-lg">
+              <img
+                src="https://github.com/user-attachments/assets/70cd09f1-6c6d-4c89-ae81-3500d86f7b81"
+                alt="Word en la Web"
+                class="w-full h-64 object-cover group-hover:scale-105 transition duration-300"
+              />
+            </div>
+            <p class="mt-3 text-center text-sm font-medium text-gray-600 dark:text-gray-300">
+              Word Web
+            </p>
+          </div>
+          <div class="gallery-item cursor-pointer group">
+            <div class="overflow-hidden rounded-xl shadow-lg">
+              <img
+                src="https://github.com/user-attachments/assets/70a53edf-d790-4893-8680-3afa0f231ed7"
+                alt="Word de Escritorio"
+                class="w-full h-64 object-cover group-hover:scale-105 transition duration-300"
+              />
+            </div>
+            <p class="mt-3 text-center text-sm font-medium text-gray-600 dark:text-gray-300">
+              Word Escritorio
+            </p>
+          </div>
+          <div class="gallery-item cursor-pointer group">
+            <div class="overflow-hidden rounded-xl shadow-lg">
+              <img
+                src="https://img.youtube.com/vi/D5TxJmWushk/maxresdefault.jpg"
+                alt="Vista previa del video"
+                class="w-full h-64 object-cover group-hover:scale-105 transition duration-300"
+              />
+            </div>
+            <p class="mt-3 text-center text-sm font-medium text-gray-600 dark:text-gray-300">
+              Word
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal   -->
+    <div
+      id="image-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4"
+    >
+      <button
+        id="close-modal"
+        class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition z-10"
+      >
+        &times;
+      </button>
+
+      <!-- Botón anterior -->
+      <button
+        id="prev-image"
+        class="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition z-10 backdrop-blur-sm"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+
+      <img
+        id="modal-image"
+        src=""
+        alt="Imagen ampliada"
+        class="max-w-full max-h-full object-contain rounded-lg"
+      />
+
+      <!-- Botón siguiente -->
+      <button
+        id="next-image"
+        class="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition z-10 backdrop-blur-sm"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <!-- Indicador  -->
+      <div
+        id="image-counter"
+        class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm"
+      >
+        1 / 3
+      </div>
+    </div>
+
+    <section id="instalacion" class="py-16 md:py-24 bg-gray-100 dark:bg-gray-900">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Instalación rápida</h2>
+          <p class="text-gray-600 dark:text-gray-300">
+            Si solo quieres probar el complemento rápidamente en Word, sigue estos pasos.
+          </p>
+        </div>
+        <div class="grid gap-4">
+          <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              1
+            </div>
+            <div>
+              <h3 class="font-semibold mb-1">Descarga el manifest</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">
+                Descarga el archivo
+                <code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">manifest.xml</code>.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              2
+            </div>
+            <div>
+              <h3 class="font-semibold mb-1">Abre Microsoft Word</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">
+                Abre Word en tu computadora o en la versión web.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              3
+            </div>
+            <div>
+              <h3 class="font-semibold mb-1">Carga el complemento</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">
+                Ve a <strong>Insertar → Mis complementos → Administrar mis complementos</strong>.
+                Elige <strong>"Cargar complemento sin empaquetar"</strong> y selecciona el archivo
+                <code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">manifest.xml</code>.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              4
+            </div>
+            <div>
+              <h3 class="font-semibold mb-1">¡Listo para usar!</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">
+                Abre el panel de tareas del complemento y pega el contenido de tu chatbot.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-8">
+          <a
+            href="https://github.com/ph0Void/ChatToWord/blob/ffe9aee6117b7f3b978f58d92c10cc0a6112c08f/download/manifest.xml"
+            download="manifest.xml"
+            target="_blank"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition shadow-lg"
+          >
+            <svg
+              fill="#000000"
+              width="30px"
+              height="30px"
+              viewBox="0 0 24 24"
+              id="download-alt"
+              data-name="Flat Line"
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon flat-line"
+            >
+              <polyline
+                id="primary"
+                points="8 12 12 16 16 12"
+                style="
+                  fill: none;
+                  stroke: rgb(255, 255, 255);
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 2;
+                "
+              ></polyline>
+              <path
+                id="primary-2"
+                data-name="primary"
+                d="M5,21H19M12,3V16"
+                style="
+                  fill: none;
+                  stroke: rgb(255, 251, 251);
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 2;
+                "
+              ></path>
+            </svg>
+            Descargar manifest.xml
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-white dark:bg-gray-800">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Instalación y ejecución local</h2>
+          <p class="text-gray-600 dark:text-gray-300">Para desarrollo.</p>
+        </div>
+
+        <div class="mb-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl">
+          <h3 class="font-semibold text-lg mb-4">📋 Requisitos</h3>
+          <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+            <li class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Node.js (recomendado v20+)
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              npm (incluido con Node.js)
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Microsoft Word (Web o Escritorio)
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="font-semibold mb-3">1. Clona el repositorio:</h3>
+            <div class="code-block">
+              <code>git clone https://github.com/ph0Void/ChatToWord.git<br />cd ChatToWord</code>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-3">2. Instala dependencias:</h3>
+            <div class="code-block">
+              <code>npm install</code>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-3">3. Genera e instala los certificados de desarrollo:</h3>
+            <div class="code-block">
+              <code>npx office-addin-dev-certs install</code>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-3">4. Inicia el servidor de desarrollo:</h3>
+            <div class="code-block">
+              <code>npm run start</code>
+            </div>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mt-4">
+            ✅ Automáticamente se abrirá Word para poder probar el complemento.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="docker" class="py-16 md:py-24 bg-gray-100 dark:bg-gray-900">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Ejecutar con Docker</h2>
+          <p class="text-gray-600 dark:text-gray-300">
+            El proyecto está configurado para ejecutar el servidor de desarrollo en un contenedor y
+            exponer el puerto 3000.
+          </p>
+        </div>
+
+        <div class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-xl">
+          <h3 class="font-semibold text-lg mb-4">📋 Requisitos</h3>
+          <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+            <li class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Docker Desktop instalado
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Certificados de desarrollo generados en Windows
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="font-semibold mb-3">
+              1. Genera los certificados en el host (si no lo has hecho):
+            </h3>
+            <div class="code-block">
+              <code>npx office-addin-dev-certs install</code>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-3">
+              2. Verifica que exista el directorio de certificados:
+            </h3>
+            <div class="code-block">
+              <code>%USERPROFILE%\.office-addin-dev-certs</code>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-3">3. Levanta los contenedores:</h3>
+            <div class="code-block">
+              <code
+                ># Detener si ya hay algo levantado<br />docker-compose down<br /><br />#
+                Reconstruir y levantar<br />docker-compose up --build</code
+              >
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-3">4. Abre Word y carga el complemento</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">
+              Usa el
+              <code class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">manifest.xml</code> para
+              cargar el complemento en Word.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-white dark:bg-gray-800">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Solución rápida de problemas</h2>
+          <p class="text-gray-600 dark:text-gray-300">Problemas frecuentes y sus soluciones.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl border-l-4 border-yellow-500">
+            <h3 class="font-semibold mb-2">
+              ⚠️ El panel del complemento no carga o aparece en blanco
+            </h3>
+            <ul class="text-gray-600 dark:text-gray-300 text-sm space-y-1 ml-4 list-disc">
+              <li>
+                Comprueba que
+                <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded"
+                  >https://localhost:3000</code
+                >
+                es accesible desde el host.
+              </li>
+              <li>Revisa que el servidor (local o en Docker) está en ejecución.</li>
+            </ul>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl border-l-4 border-red-500">
+            <h3 class="font-semibold mb-2">
+              🔐 Problemas con certificados / Word no confía en la URL
+            </h3>
+            <ul class="text-gray-600 dark:text-gray-300 text-sm space-y-1 ml-4 list-disc">
+              <li>
+                Vuelve a ejecutar:
+                <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded"
+                  >npx office-addin-dev-certs install</code
+                >
+              </li>
+              <li>Asegúrate de que los certificados se instalaron para el usuario actual.</li>
+            </ul>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl border-l-4 border-blue-500">
+            <h3 class="font-semibold mb-2">
+              🐳 Usando Docker: error con certificados dentro del contenedor
+            </h3>
+            <ul class="text-gray-600 dark:text-gray-300 text-sm space-y-1 ml-4 list-disc">
+              <li>No intentes instalar certificados dentro del contenedor.</li>
+              <li>
+                Usa los certificados generados en el host y mapeados vía
+                <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">docker-compose.yml</code>.
+              </li>
+            </ul>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl border-l-4 border-purple-500">
+            <h3 class="font-semibold mb-2">🔌 Puerto 3000 en uso</h3>
+            <ul class="text-gray-600 dark:text-gray-300 text-sm space-y-1 ml-4 list-disc">
+              <li>
+                Cambia
+                <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">dev_server_port</code> en
+                <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">package.json</code>
+              </li>
+              <li>
+                O ajusta el mapeo de puertos en
+                <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">docker-compose.yml</code>.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="soporte" class="py-16 md:py-24 gradient-bg">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Soporte</h2>
+        <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
+          Si encuentras algún error, tienes dudas o sugerencias, ¡nos encantaría saber de ti! Este
+          es un proyecto libre y cualquier idea es bienvenida.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="https://github.com/ph0Void/ChatToWord/issues/new"
+            target="_blank"
+            class="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-gray-100 transition shadow-lg"
+          >
+            Abrir issue en GitHub
+          </a>
+          <!-- <a
+            href="https://github.com/ph0Void/ChatToWord"
+            target="_blank"
+            class="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-400 transition border-2 border-indigo-300"
+          >
+            Dar estrella al proyecto
+          </a> -->
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-8 bg-gray-900 text-gray-400">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="text-center md:text-left">
+            <p class="font-semibold text-white">Chat to Word</p>
+            <p class="text-sm">
+              Proyecto &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+            </p>
+          </div>
+          <div class="flex items-center gap-4">
+            <a
+              href="https://github.com/ph0Void/ChatToWord"
+              target="_blank"
+              class="hover:text-white transition"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+            </a>
+            <span class="text-sm"
+              >Hecho con ❤️ por
+              <a
+                href="https://github.com/ph0Void"
+                target="_blank"
+                class="text-indigo-400 hover:text-indigo-300"
+                >ph0Void</a
+              ></span
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggleDesktop = document.getElementById("theme-toggle");
+        const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+
+        function toggleTheme() {
+          const html = document.documentElement;
+          const isDark = html.classList.contains("dark");
+
+          if (isDark) {
+            html.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            console.log("Tema cambiado a: light");
+          } else {
+            html.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            console.log("Tema cambiado a: dark");
+          }
+        }
+
+        if (themeToggleDesktop) {
+          themeToggleDesktop.onclick = function (e) {
+            e.preventDefault();
+            toggleTheme();
+          };
+        }
+
+        if (themeToggleMobile) {
+          themeToggleMobile.onclick = function (e) {
+            e.preventDefault();
+            toggleTheme();
+          };
+        }
+      });
+
+      // ==========================================
+      // MOBILE MENU
+      // ==========================================
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+          });
+        });
+      }
+
+      const modal = document.getElementById("image-modal");
+      const modalImage = document.getElementById("modal-image");
+      const closeModalBtn = document.getElementById("close-modal");
+      const prevBtn = document.getElementById("prev-image");
+      const nextBtn = document.getElementById("next-image");
+      const imageCounter = document.getElementById("image-counter");
+      const galleryItems = document.querySelectorAll(".gallery-item");
+
+      const galleryImages = [];
+      galleryItems.forEach((item) => {
+        const img = item.querySelector("img");
+        if (img) {
+          galleryImages.push({
+            src: img.src,
+            alt: img.alt,
+          });
+        }
+      });
+
+      let currentImageIndex = 0;
+
+      function showImage(index) {
+        if (index < 0) {
+          currentImageIndex = galleryImages.length - 1;
+        } else if (index >= galleryImages.length) {
+          currentImageIndex = 0;
+        } else {
+          currentImageIndex = index;
+        }
+
+        const image = galleryImages[currentImageIndex];
+        modalImage.src = image.src;
+        modalImage.alt = image.alt;
+        imageCounter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+      }
+
+      function openModal(index) {
+        currentImageIndex = index;
+        showImage(currentImageIndex);
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeImageModal() {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        document.body.style.overflow = "";
+      }
+
+      function prevImage(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        showImage(currentImageIndex - 1);
+      }
+
+      function nextImage(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        showImage(currentImageIndex + 1);
+      }
+
+      galleryItems.forEach((item, index) => {
+        item.addEventListener("click", () => {
+          openModal(index);
+        });
+      });
+
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeImageModal();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", prevImage);
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener("click", nextImage);
+      }
+
+      if (modal) {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            closeImageModal();
+          }
+        });
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (modal && !modal.classList.contains("hidden")) {
+          switch (e.key) {
+            case "Escape":
+              closeImageModal();
+              break;
+            case "ArrowLeft":
+              prevImage();
+              break;
+            case "ArrowRight":
+              nextImage();
+              break;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
