@@ -1,55 +1,7 @@
 // src/taskpane/utils/TextParser.ts
 
+import { PATRONES_COMPLEJOS } from "../rules/PatronRules";
 import { SIMBOLOS_A_LATEX } from "../rules/Rules";
-
-interface PatronComplejo {
-  regex: RegExp;
-  reemplazo: string | ((match: string, ...groups: string[]) => string);
-}
-
-const PATRONES_COMPLEJOS: PatronComplejo[] = [
-  {
-    regex: /([a-zA-Z])⃗/g,
-    reemplazo: "\\vec{$1}",
-  },
-  {
-    regex: /([a-zA-Z])̄/g,
-    reemplazo: "\\bar{$1}",
-  },
-  {
-    regex: /([a-zA-Z])̇/g,
-    reemplazo: "\\dot{$1}",
-  },
-  // Letras con dos puntos encima: ẍ → \ddot{x}
-  {
-    regex: /([a-zA-Z])̈/g,
-    reemplazo: "\\ddot{$1}",
-  },
-  {
-    regex: /([a-zA-Z])̂/g,
-    reemplazo: "\\hat{$1}",
-  },
-  {
-    regex: /([a-zA-Z])̃/g,
-    reemplazo: "\\tilde{$1}",
-  },
-  {
-    regex: /([a-zA-Z])́/g,
-    reemplazo: "\\acute{$1}",
-  },
-  {
-    regex: /([a-zA-Z])̀/g,
-    reemplazo: "\\grave{$1}",
-  },
-  {
-    regex: /([a-zA-Z])̆/g,
-    reemplazo: "\\breve{$1}",
-  },
-  {
-    regex: /([a-zA-Z])̊/g,
-    reemplazo: "\\mathring{$1}",
-  },
-];
 
 export function preprocesarTexto(texto: string): string {
   let resultado = texto;
@@ -61,7 +13,6 @@ export function preprocesarTexto(texto: string): string {
   }
 
   for (const [simbolo, latex] of Object.entries(SIMBOLOS_A_LATEX)) {
-    // Usar split/join para evitar problemas con caracteres especiales en regex
     resultado = resultado.split(simbolo).join(latex);
   }
 

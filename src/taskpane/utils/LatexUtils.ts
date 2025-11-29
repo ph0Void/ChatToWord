@@ -1,6 +1,7 @@
 // src/taskpane/utils/LatexUtils.ts
 import katex from "katex";
 import { escapeHtml } from "./HtmlUtils";
+import { PATRONES_MACROS } from "../rules/MacrosRules";
 
 export function limpiarLatex(latex: string): string {
   let limpio = latex
@@ -31,30 +32,31 @@ export function latexAMathML(latex: string, displayMode: boolean): string {
       throwOnError: false,
       strict: false,
       trust: true,
-      macros: {
-        // Conjuntos numéricos
-        "\\R": "\\mathbb{R}",
-        "\\N": "\\mathbb{N}",
-        "\\Z": "\\mathbb{Z}",
-        "\\Q": "\\mathbb{Q}",
-        "\\C": "\\mathbb{C}",
-        // Símbolos especiales
-        "\\checkmark": "✓",
-        "\\qquad": "\\quad\\quad",
-        // Funciones adicionales
-        "\\sen": "\\sin",
-        "\\senh": "\\sinh",
-        "\\arctg": "\\arctan",
-        "\\tg": "\\tan",
-        "\\cotg": "\\cot",
-        // Derivadas
-        "\\dv": "\\frac{d#1}{d#2}",
-        "\\pdv": "\\frac{\\partial#1}{\\partial#2}",
-        // Otros
-        "\\grad": "\\nabla",
-        "\\curl": "\\nabla\\times",
-        "\\div": "\\nabla\\cdot",
-      },
+      // macros: {
+      //   // Conjuntos numéricos
+      //   "\\R": "\\mathbb{R}",
+      //   "\\N": "\\mathbb{N}",
+      //   "\\Z": "\\mathbb{Z}",
+      //   "\\Q": "\\mathbb{Q}",
+      //   "\\C": "\\mathbb{C}",
+      //   // Símbolos especiales
+      //   "\\checkmark": "✓",
+      //   "\\qquad": "\\quad\\quad",
+      //   // Funciones adicionales
+      //   "\\sen": "\\sin",
+      //   "\\senh": "\\sinh",
+      //   "\\arctg": "\\arctan",
+      //   "\\tg": "\\tan",
+      //   "\\cotg": "\\cot",
+      //   // Derivadas
+      //   "\\dv": "\\frac{d#1}{d#2}",
+      //   "\\pdv": "\\frac{\\partial#1}{\\partial#2}",
+      //   // Otros
+      //   "\\grad": "\\nabla",
+      //   "\\curl": "\\nabla\\times",
+      //   "\\div": "\\nabla\\cdot",
+      // },
+      macros: PATRONES_MACROS,
     });
 
     let mathmlFinal = mathml

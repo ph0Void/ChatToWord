@@ -5,7 +5,6 @@ export function generarPlaceholder(index: number): string {
 }
 
 export function esContenidoMatematico(texto: string): boolean {
-  // Patrones que indican contenido matemático
   const patronesMatematicos = [
     /\\[a-zA-Z]+/,
     /\^\{[^}]+\}/,

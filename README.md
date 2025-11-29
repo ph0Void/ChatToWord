@@ -90,7 +90,3 @@ docker-compose up --build
 - Si el puerto 3000 está en uso en tu host, cambia `dev_server_port` en `package.json` o el mapeo de puertos en `docker-compose.yml`.
 
 ---
-
-# IMPORTANTE
-
-Si encuentras algun error por favor abre un issue en el repositorio o contactame directamente.

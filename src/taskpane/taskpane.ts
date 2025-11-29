@@ -24,7 +24,7 @@ interface FormulaInfo {
   latex: string;
   displayMode: boolean;
   placeholder: string;
-  original: string; // Para debugging
+  original: string;
 }
 
 function extraerFormulasLatex(texto: string): { textoLimpio: string; formulas: FormulaInfo[] } {
