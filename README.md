@@ -3,7 +3,7 @@
 Complemento de Microsoft Word que convierte respuestas de chatbots (ChatGPT, Claude, Gemini, etc.) en contenido **totalmente editable** dentro de Word.  
 Soporta tablas, bloques de código y fórmulas matemáticas.
 
-[![Ver video en YouTube](https://img.youtube.com/vi/WNjaBso8L8o/0.jpg)](https://youtu.be/D5TxJmWushk)
+[![Ver video en YouTube](https://img.youtube.com/vi/WNjaBso8L8o/0.jpg)](https://youtu.be/-bGVBzOoCq0)
 
 ---
 
